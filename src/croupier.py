@@ -1,28 +1,39 @@
 import random
 
-def distribuir_cartas(num_jogadores):
+def distribuir_cartas(num_jogadores, num_cartas_jogador, num_cartas_comunitarias):
     """
-    Distribui duas cartas únicas para cada jogador em um jogo de cartas.
+    Distribui cartas para jogadores e uma mesa comunitária.
 
     Args:
-        num_jogadores: O número de jogadores.
+        num_jogadores: Número de jogadores.
+        num_cartas_jogador: Número de cartas por jogador.
+        num_cartas_comunitarias: Número de cartas comunitárias.
 
     Returns:
-        Uma lista de listas, onde cada lista interna representa as cartas de um jogador.
+        Uma tupla com duas listas:
+            * mao_jogadores: Uma lista de listas, onde cada lista interna representa as cartas de um jogador.
+            * cartas_comunitarias: Uma lista com as cartas comunitárias.
     """
 
-    naipes = ['P', 'C', 'O', 'E']  # Paus, Copas, Ouros, Espadas
+    naipes = ['P', 'C', 'O', 'E']
     valores = list(range(1, 14))
-
     baralho = [(valor, naipe) for naipe in naipes for valor in valores]
     random.shuffle(baralho)
 
-    cartas_por_jogador = 2
-    mao_jogadores = [baralho[i:i+cartas_por_jogador] for i in range(0, num_jogadores*cartas_por_jogador, cartas_por_jogador)]
+    # Distribuir cartas para os jogadores
+    mao_jogadores = [baralho[i:i+num_cartas_jogador] for i in range(0, num_jogadores*num_cartas_jogador, num_cartas_jogador)]
+    baralho = baralho[num_jogadores*num_cartas_jogador:]
 
-    return mao_jogadores
+    # Distribuir cartas comunitárias
+    cartas_comunitarias = baralho[:num_cartas_comunitarias]
 
-# Exemplo de uso:
-num_jogadores = 26
-maos = distribuir_cartas(num_jogadores)
-print(maos)
+    return mao_jogadores, cartas_comunitarias
+
+# Exemplo de uso para um jogo de Texas Hold'em:
+num_jogadores = 4
+num_cartas_jogador = 2
+num_cartas_comunitarias = 5
+
+maos, comunitarias = distribuir_cartas(num_jogadores, num_cartas_jogador, num_cartas_comunitarias)
+print("Mãos dos jogadores:", maos)
+print("Cartas comunitárias:", comunitarias)
