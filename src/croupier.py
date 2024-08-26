@@ -97,7 +97,7 @@ resultado = analisar_maos(maos, comunitarias)
 # Imprimindo os resultados
 print("Cartas Comunitárias:", comunitarias)
 
-for jogador, (melhor_mao, classificacao) in enumerate(resultado):
+for (jogador, melhor_mao, classificacao) in enumerate(resultado):
     if melhor_mao is None:
         print(f"Jogador {jogador+1}: Sem mão válida")
     else:    
