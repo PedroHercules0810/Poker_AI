@@ -87,44 +87,53 @@ def classificar_mao(mao):
     # High card
     return 1, "High Card"
 
-def encontrar_vencedor(classificacoes):
+def encontrar_vencedor(classificacoes, catras_das_maos):
     melhor_classificacao = max(classificacoes, key=lambda x: x[0])
+    print(f"Melhor classificação: {melhor_classificacao}")
+    
     vencedores = [i for i, classificacao in enumerate(classificacoes) if classificacao == melhor_classificacao]
-    return vencedores
+    
+    # Inicializa a maior carta como -1 para garantir que qualquer carta seja maior inicialmente
+    maior_carta = -1
+    vencedor_final = -1
+    
+    for i in vencedores:
+            if maior_carta < catras_das_maos[i][0][0]:
+                maior_carta = catras_das_maos[i][0][0]
+                vencedor_final = i
+    
+    return vencedor_final# Deve retornar o índice do vencedor com a maior carta
+
 
 num_cartas_jogador = 2
 num_cartas_comunitarias = 5
 
 print("Quantos jogadores irão jogar?")
 num_jogadores = input()
-
+catras_das_maos = [0] * int(num_jogadores)
 num_jogadores = int(num_jogadores)
+
+if num_jogadores > 23:
+    print("Quantidade invalida de jogadores")
+    exit()
 
 maos, comunitarias = distribuir_cartas(num_jogadores, num_cartas_jogador, num_cartas_comunitarias)
 
 # Imprimindo os resultados
 print("Cartas Comunitárias:", comunitarias)
 
-for i in range(num_jogadores):
-    mao_jogador = maos[i]
-    mao_completa = mao_jogador + comunitarias
-    classificacao, descricao = classificar_mao(mao_completa)
-    print(f"Jogador {i+1}: {mao_jogador} = {descricao}")
-    
-
 classificacoes_jogadores = []
 for i in range(num_jogadores):
     mao_jogador = maos[i]
     mao_completa = mao_jogador + comunitarias
     classificacao, descricao = classificar_mao(mao_completa)
+    print(f"Jogador {i+1}: {mao_jogador} = {descricao}")
     classificacoes_jogadores.append((classificacao, descricao))
+    catras_das_maos[i] = mao_jogador
 
-vencedores = encontrar_vencedor(classificacoes_jogadores)
+vencedor_index = encontrar_vencedor(classificacoes_jogadores, catras_das_maos)
 # Retornando o índice do primeiro vencedor (se houver empate)
-if vencedores:
-    vencedor = vencedores[0]
-    print(f"O vencedor é o jogador {vencedor+1}")
+if vencedor_index:
+    print(f"O vencedor é o jogador {maos[vencedor_index]}")
 else:
-    print("Não houve vencedor.")
-
-
+    print("Algo está errado")
