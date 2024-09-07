@@ -4,11 +4,13 @@ const valores = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 let numero_jogadores;
 let jogadores = [];
 
+//função que aleatoriza valores
 function escolherValorAleatorio(vetor) {
     const indiceAleatorio = Math.floor(Math.random() * vetor.length);
     return vetor[indiceAleatorio];
 }
 
+//classe da carta
 class Carta {
     constructor(naipe, valor) {
         this.valor = escolherValorAleatorio(valores);
@@ -16,6 +18,7 @@ class Carta {
     }
 }
 
+//classe do jogador
 class Jogador {
     constructor( carta_1, carta_2) {
         this.carta_1 = new Carta;
@@ -23,10 +26,12 @@ class Jogador {
     }
 }
 
+//função que verifica se as cartas são iguais
 function cartasSaoIguais(carta1, carta2) {
     return carta1.valor === carta2.valor && carta1.naipe === carta2.naipe;
 }
 
+//função que distribui as cartas dos jogadores
 function  distribuirCartas(){
     let c1 = new Carta();
     while (cartasUsadas.some(carta => cartasSaoIguais(carta, c1))) {
@@ -44,6 +49,8 @@ function  distribuirCartas(){
     jog.carta_2 = c2;
     jogadores.push(jog);
 }
+
+//função que distribui as cartas comunitarias
 function  distribuirCartasComunitarias(){
     let c1 = new Carta();
     while (cartasUsadas.some(carta => cartasSaoIguais(carta, c1))) {
@@ -77,18 +84,39 @@ function  distribuirCartasComunitarias(){
 
 }
 
+//função para verificar se é par
+function isPar(jogador, comunitarias) {
 
+    jogador = new Jogador
+
+    for (let i = 0; i < comunitarias.length; i++) {
+        if (jogador.carta_1.valor == comunitarias[i].valor || jogador.carta_2.valor == comunitarias[i].valor ) {
+            return true;
+        }
+    }
+}
+
+//pedido de quantos jogadores irão jogar
 numero_jogadores = prompt("Quantos jogadores irão jogar?")
 
+//distribuindo as cartas comunitarias
+comunitarias = distribuirCartasComunitarias()
 
-console.log(distribuirCartasComunitarias());
+//mostrando as cartas comunitarias
+console.log(comunitarias);
 
-
+//distribuindo as cartas para os jogadores
 for(let i=0;i<numero_jogadores; i++){
     distribuirCartas();
 }
 
+//mostrando os jogadores
 for(let i=0;i<numero_jogadores; i++){
+    if (isPar(jogadores[i], comunitarias)) {
+        console.log(jogadores[i], "Tem um par");
+    }
     console.log(jogadores[i]);
+    
+    
 }
 
