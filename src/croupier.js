@@ -1,7 +1,7 @@
 var cartasUsadas = [];
 const naipes = ['O', 'E', 'P', 'C'];
 const valores = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-let numero_jogadores = 10;
+let numero_jogadores;
 let jogadores = [];
 
 function escolherValorAleatorio(vetor) {
@@ -11,8 +11,8 @@ function escolherValorAleatorio(vetor) {
 
 class Carta {
     constructor(naipe, valor) {
-        this.naipe = escolherValorAleatorio(naipes);
         this.valor = escolherValorAleatorio(valores);
+        this.naipe = escolherValorAleatorio(naipes);
     }
 }
 
@@ -77,6 +77,10 @@ function  distribuirCartasComunitarias(){
 
 }
 
+
+numero_jogadores = prompt("Quantos jogadores irão jogar?")
+
+
 console.log(distribuirCartasComunitarias());
 
 
@@ -87,5 +91,4 @@ for(let i=0;i<numero_jogadores; i++){
 for(let i=0;i<numero_jogadores; i++){
     console.log(jogadores[i]);
 }
-
 
