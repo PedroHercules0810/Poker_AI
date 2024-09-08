@@ -87,7 +87,7 @@ function  distribuirCartasComunitarias(){
 //função para verificar se é par
 function isPar(jogador, comunitarias) {
 
-    jogador = new Jogador
+    // jogador = new Jogador
 
     for (let i = 0; i < comunitarias.length; i++) {
         if (jogador.carta_1.valor == comunitarias[i].valor || jogador.carta_2.valor == comunitarias[i].valor ) {
@@ -116,7 +116,4 @@ for(let i=0;i<numero_jogadores; i++){
         console.log(jogadores[i], "Tem um par");
     }
     console.log(jogadores[i]);
-    
-    
 }
-
